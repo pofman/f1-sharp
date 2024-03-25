@@ -23,15 +23,14 @@ namespace ConsoleSample
         private static void Client_OnLapDataReceive(LapDataPacket packet)
         {
             int index = 0;
-            Console.Clear();
             foreach (LapData data in packet.lapData)
             {
-                var lastLapTime = TimeSpan.FromMilliseconds(data.lastLapTimeInMS);
+                var lLapTime = TimeSpan.FromMilliseconds(data.lastLapTimeInMS);
                 Console.WriteLine($"INDEX: {index}");
                 Console.WriteLine($"Sectory 1: {data.sector1TimeInMS} ms");
                 Console.WriteLine($"Sectory 2: {data.sector2TimeInMS} ms");
                 Console.WriteLine($"Sectory 3: - ms");
-                Console.WriteLine($"Last Lap: {lastLapTime.TotalMinutes}:{lastLapTime.TotalSeconds}:{lastLapTime.TotalMilliseconds} ms");
+                Console.WriteLine($"Last Lap: {lLapTime.TotalMinutes}:{lLapTime.TotalSeconds}:{lLapTime.TotalMilliseconds} ms");
                 Console.WriteLine("----");
                 index++;
                 if (index == 5)
@@ -40,13 +39,21 @@ namespace ConsoleSample
                 }
             }
 
-            Console.WriteLine($"{packet.lapData[packet.header.playerCarIndex]}");
+            var playerData = packet.lapData[packet.header.playerCarIndex];
+            var lastLapTime = TimeSpan.FromMilliseconds(playerData.lastLapTimeInMS);
+            var sector1Time = TimeSpan.FromMilliseconds(playerData.sector1TimeInMS);
+            var sector2Time = TimeSpan.FromMilliseconds(playerData.sector2TimeInMS);
+            Console.WriteLine("----- PLAYER DATA -----");
+            Console.WriteLine($"Sectory 1: 00:{sector1Time.TotalSeconds}:{sector1Time.TotalMilliseconds}");
+            Console.WriteLine($"Sectory 2: 00:{sector2Time.TotalSeconds}:{sector2Time.TotalMilliseconds}");
+            Console.WriteLine($"Sectory 3: 00:00:00");
+            Console.WriteLine($"Last Lap: {lastLapTime.TotalMinutes}:{lastLapTime.TotalSeconds}:{lastLapTime.TotalMilliseconds} ms");
+            Console.WriteLine($"{playerData}");
         }
 
         private static void Client_OnCarDamageDataReceive(CarDamagePacket packet)
         {
             int index = 0;
-            Console.Clear();
             foreach (CarDamageData data in packet.carDamageData)
             {
                 Console.WriteLine($"INDEX: {index}");
@@ -59,7 +66,10 @@ namespace ConsoleSample
                 }
             }
 
+            Console.WriteLine("----- PLAYER DATA -----");
+            Console.WriteLine($"INDEX: {packet.header.playerCarIndex}");
             Console.WriteLine($"{packet.carDamageData[packet.header.playerCarIndex]}");
+            Console.WriteLine("----");
         }
     }
 }
