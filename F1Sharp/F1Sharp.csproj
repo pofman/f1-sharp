@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
 	<Description>Receive and parse the telemetry packets from the F1® 23 game, and hopefully future ones too.</Description>
-	<Copyright>2023 Gustavo Vera Scuderi</Copyright>
+	<Copyright>2024 Martin Mendez</Copyright>
 	<PackageProjectUrl>https://github.com/gvescu/f1-sharp</PackageProjectUrl>
 	<PackageTags>f1, formula, formula1, game, telemetry, udp</PackageTags>
 	<RepositoryUrl>https://github.com/gvescu/f1-sharp</RepositoryUrl>
-	<Authors>Gustavo Vera Scuderi</Authors>
+	<Authors>Martin Mendez</Authors>
 	<AssemblyName>F1Sharp</AssemblyName>
-	<VersionPrefix>1.3.0</VersionPrefix>
+	<VersionPrefix>1.0.0</VersionPrefix>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<RepositoryType>git</RepositoryType>
