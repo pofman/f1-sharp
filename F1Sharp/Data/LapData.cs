@@ -33,6 +33,14 @@ namespace F1Sharp.Data
         /// </summary>
         public byte sector2TimeMinutes;
         /// <summary>
+        /// Sector 3 time in milliseconds
+        /// </summary>
+        public ushort sector3TimeInMS;
+        /// <summary>
+        /// Sector 3 whole minute part
+        /// </summary>
+        public byte sector3TimeMinutes;
+        /// <summary>
         /// Time delta to car in front in milliseconds
         /// </summary>
         public ushort deltaToCarInFrontInMS;

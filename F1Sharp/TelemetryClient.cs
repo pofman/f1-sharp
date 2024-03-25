@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
+using System.Text;
 using Timer = System.Timers.Timer;
 
 namespace F1Sharp
@@ -138,6 +139,8 @@ namespace F1Sharp
             try
             {
                 byte[] data = _client.EndReceive(result, ref _peerEndPoint);
+
+                Console.WriteLine($"RAW DATA: {Encoding.UTF8.GetString(data)}");
 
                 _handle = GCHandle.Alloc(data, GCHandleType.Pinned);
 

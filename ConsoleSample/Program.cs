@@ -27,9 +27,9 @@ namespace ConsoleSample
             {
                 var lLapTime = TimeSpan.FromMilliseconds(data.lastLapTimeInMS);
                 Console.WriteLine($"INDEX: {index}");
-                Console.WriteLine($"Sectory 1: {data.sector1TimeInMS} ms");
-                Console.WriteLine($"Sectory 2: {data.sector2TimeInMS} ms");
-                Console.WriteLine($"Sectory 3: - ms");
+                Console.WriteLine($"Sector 1: {data.sector1TimeInMS} ms");
+                Console.WriteLine($"Sector 2: {data.sector2TimeInMS} ms");
+                Console.WriteLine($"Sector 3: {data.sector3TimeInMS} ms");
                 Console.WriteLine($"Last Lap: {lLapTime.TotalMinutes}:{lLapTime.TotalSeconds}:{lLapTime.TotalMilliseconds} ms");
                 Console.WriteLine("----");
                 index++;
@@ -43,10 +43,11 @@ namespace ConsoleSample
             var lastLapTime = TimeSpan.FromMilliseconds(playerData.lastLapTimeInMS);
             var sector1Time = TimeSpan.FromMilliseconds(playerData.sector1TimeInMS);
             var sector2Time = TimeSpan.FromMilliseconds(playerData.sector2TimeInMS);
+            var sector3Time = TimeSpan.FromMilliseconds(playerData.sector3TimeInMS);
             Console.WriteLine("----- PLAYER DATA -----");
-            Console.WriteLine($"Sectory 1: 00:{sector1Time.TotalSeconds}:{sector1Time.TotalMilliseconds}");
-            Console.WriteLine($"Sectory 2: 00:{sector2Time.TotalSeconds}:{sector2Time.TotalMilliseconds}");
-            Console.WriteLine($"Sectory 3: 00:00:00");
+            Console.WriteLine($"Sector 1: 00:{sector1Time.TotalSeconds}:{sector1Time.TotalMilliseconds}");
+            Console.WriteLine($"Sector 2: 00:{sector2Time.TotalSeconds}:{sector2Time.TotalMilliseconds}");
+            Console.WriteLine($"Sector 3: 00:{sector3Time.TotalSeconds}:{sector3Time.TotalMilliseconds}");
             Console.WriteLine($"Last Lap: {lastLapTime.TotalMinutes}:{lastLapTime.TotalSeconds}:{lastLapTime.TotalMilliseconds} ms");
             Console.WriteLine($"{playerData}");
         }
