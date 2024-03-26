@@ -63,12 +63,7 @@ namespace ConsoleSample
         private static void PrintIfGratherOrEqualToZero(TimeSpan value, string prefix = "")
         {
             if (value.TotalMilliseconds >= 0)
-                Console.WriteLine(string.Format("{0} {1}:{2}:{3}",
-                    prefix,
-                    Math.Round(value.TotalMinutes, 0).ToString("00"),
-                    Math.Round(value.TotalSeconds, 0).ToString("00"),
-                    Math.Round(value.TotalMilliseconds, 0).ToString("00"))
-                );
+                Console.WriteLine($"{prefix} {value.ToString("mm':'ss':'fff")}");
         }
 
         /// <summary>

@@ -25,6 +25,12 @@ namespace F1Sharp.ViewModels
         private byte _sector2TimeInMinutes;
 
         [ObservableProperty]
+        public ushort sector3TimeInMS;
+
+        [ObservableProperty]
+        public byte sector3TimeMinutes;
+
+        [ObservableProperty]
         private ushort _deltaToCarInFrontInMS;
 
         [ObservableProperty]
@@ -101,6 +107,8 @@ namespace F1Sharp.ViewModels
             Sector1TimeInMinutes = data.sector1TimeMinutes;
             Sector2TimeInMS = data.sector2TimeInMS;
             Sector2TimeInMinutes = data.sector2TimeMinutes;
+            Sector3TimeInMS = data.sector3TimeInMS;
+            Sector3TimeMinutes = data.sector3TimeMinutes;
             DeltaToCarInFrontInMS = data.deltaToCarInFrontInMS;
             DeltaToRaceLeaderInMS = data.deltaToRaceLeaderInMS;
             LapDistance = data.lapDistance;
