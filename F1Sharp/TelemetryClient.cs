@@ -139,9 +139,6 @@ namespace F1Sharp
             try
             {
                 byte[] data = _client.EndReceive(result, ref _peerEndPoint);
-
-                Console.WriteLine($"RAW DATA: {Encoding.UTF8.GetString(data)}");
-
                 _handle = GCHandle.Alloc(data, GCHandleType.Pinned);
 
                 PacketHeader header = (PacketHeader)Marshal.PtrToStructure(_handle.AddrOfPinnedObject(), typeof(PacketHeader));

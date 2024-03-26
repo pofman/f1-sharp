@@ -42,10 +42,10 @@ namespace ConsoleSample
             var sector3Time = TimeSpan.FromMilliseconds(playerData.sector3TimeInMS);
             Console.WriteLine("----- PLAYER DATA -----");
             Console.WriteLine($"PLAYER INDEX: {packet.header.playerCarIndex}");
-            PrintIfGratherThanZero(sector1Time, "Sector 1: ");
-            PrintIfGratherThanZero(sector2Time, "Sector 2: ");
-            PrintIfGratherThanZero(sector3Time, "Sector 3: ");
-            PrintIfGratherThanZero(lastLapTime, "Last Lap: ");
+            PrintIfGratherOrEqualToZero(sector1Time, "Sector 1: ");
+            PrintIfGratherOrEqualToZero(sector2Time, "Sector 2: ");
+            PrintIfGratherOrEqualToZero(sector3Time, "Sector 3: ");
+            PrintIfGratherOrEqualToZero(lastLapTime, "Last Lap: ");
         }
 
         private static void Client_OnCarDamageDataReceive(CarDamagePacket packet)
@@ -60,10 +60,15 @@ namespace ConsoleSample
         /// Prints value to console if it's grather than zero
         /// </summary>
         /// <param name="value">Value to be printed</param>
-        private static void PrintIfGratherThanZero(TimeSpan value, string prefix = "")
+        private static void PrintIfGratherOrEqualToZero(TimeSpan value, string prefix = "")
         {
-            if (value.TotalMilliseconds > 0)
-                Console.WriteLine($"{prefix} {Math.Round(value.TotalMinutes, 2)}:{Math.Round(value.TotalSeconds, 2)}:{Math.Round(value.TotalMilliseconds, 2)}");
+            if (value.TotalMilliseconds >= 0)
+                Console.WriteLine(string.Format("{0} {1}:{2}:{3}",
+                    prefix,
+                    Math.Round(value.TotalMinutes, 0).ToString("00"),
+                    Math.Round(value.TotalSeconds, 0).ToString("00"),
+                    Math.Round(value.TotalMilliseconds, 0).ToString("00"))
+                );
         }
 
         /// <summary>
