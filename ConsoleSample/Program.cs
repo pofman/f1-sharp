@@ -1,7 +1,6 @@
-﻿using F1Sharp;
-using F1Sharp.Data;
+﻿using System.Text.Json;
+using F1Sharp;
 using F1Sharp.Packets;
-using System.Runtime.InteropServices;
 
 namespace ConsoleSample
 {
@@ -15,61 +14,44 @@ namespace ConsoleSample
 
             client.OnCarDamageDataReceive += Client_OnCarDamageDataReceive;
             client.OnLapDataReceive += Client_OnLapDataReceive;
+            client.OnCarTelemetryDataReceive += Client_OnCarTelemetryDataReceive;
 
             Console.CursorVisible = false;
             Console.Read();
         }
 
+        private static void Client_OnCarTelemetryDataReceive(CarTelemetryPacket packet)
+        {
+            var playerData = packet.carTelemetryData[packet.header.playerCarIndex];
+            Console.WriteLine($"PLAYER INDEX: {packet.header.playerCarIndex}");
+            Console.WriteLine("----- PLAYER DATA -----");
+            Console.WriteLine($"Throtle: {playerData.throttle}");
+            Console.WriteLine($"Brake: {playerData.brake}");
+            Console.WriteLine($"Gear: {playerData.gear}");
+            Console.WriteLine($"Steer: {playerData.steer}");
+            Console.WriteLine($"RPM: {playerData.engineRPM}");
+        }
+
         private static void Client_OnLapDataReceive(LapDataPacket packet)
         {
-            int index = 0;
-            foreach (LapData data in packet.lapData)
-            {
-                var lLapTime = TimeSpan.FromMilliseconds(data.lastLapTimeInMS);
-                Console.WriteLine($"INDEX: {index}");
-                Console.WriteLine($"Sector 1: {data.sector1TimeInMS} ms");
-                Console.WriteLine($"Sector 2: {data.sector2TimeInMS} ms");
-                Console.WriteLine($"Sector 3: {data.sector3TimeInMS} ms");
-                Console.WriteLine($"Last Lap: {lLapTime.TotalMinutes}:{lLapTime.TotalSeconds}:{lLapTime.TotalMilliseconds} ms");
-                Console.WriteLine("----");
-                index++;
-                if (index == 5)
-                {
-                    break;
-                }
-            }
-
             var playerData = packet.lapData[packet.header.playerCarIndex];
             var lastLapTime = TimeSpan.FromMilliseconds(playerData.lastLapTimeInMS);
             var sector1Time = TimeSpan.FromMilliseconds(playerData.sector1TimeInMS);
             var sector2Time = TimeSpan.FromMilliseconds(playerData.sector2TimeInMS);
             var sector3Time = TimeSpan.FromMilliseconds(playerData.sector3TimeInMS);
             Console.WriteLine("----- PLAYER DATA -----");
+            Console.WriteLine($"PLAYER INDEX: {packet.header.playerCarIndex}");
             Console.WriteLine($"Sector 1: 00:{sector1Time.TotalSeconds}:{sector1Time.TotalMilliseconds}");
             Console.WriteLine($"Sector 2: 00:{sector2Time.TotalSeconds}:{sector2Time.TotalMilliseconds}");
             Console.WriteLine($"Sector 3: 00:{sector3Time.TotalSeconds}:{sector3Time.TotalMilliseconds}");
             Console.WriteLine($"Last Lap: {lastLapTime.TotalMinutes}:{lastLapTime.TotalSeconds}:{lastLapTime.TotalMilliseconds} ms");
-            Console.WriteLine($"{playerData}");
         }
 
         private static void Client_OnCarDamageDataReceive(CarDamagePacket packet)
         {
-            int index = 0;
-            foreach (CarDamageData data in packet.carDamageData)
-            {
-                Console.WriteLine($"INDEX: {index}");
-                Console.WriteLine($"{data}");
-                Console.WriteLine("----");
-                index++;
-                if (index == 5)
-                {
-                    break;
-                }
-            }
-
             Console.WriteLine("----- PLAYER DATA -----");
-            Console.WriteLine($"INDEX: {packet.header.playerCarIndex}");
-            Console.WriteLine($"{packet.carDamageData[packet.header.playerCarIndex]}");
+            Console.WriteLine($"PLAYER INDEX: {packet.header.playerCarIndex}");
+            Console.WriteLine($"{JsonSerializer.Serialize(packet.carDamageData[packet.header.playerCarIndex])}");
             Console.WriteLine("----");
         }
     }
