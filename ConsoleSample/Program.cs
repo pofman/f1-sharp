@@ -25,11 +25,12 @@ namespace ConsoleSample
             var playerData = packet.carTelemetryData[packet.header.playerCarIndex];
             Console.WriteLine($"PLAYER INDEX: {packet.header.playerCarIndex}");
             Console.WriteLine("----- PLAYER DATA -----");
-            Console.WriteLine($"Throtle: {playerData.throttle}");
-            Console.WriteLine($"Brake: {playerData.brake}");
-            Console.WriteLine($"Gear: {playerData.gear}");
-            Console.WriteLine($"Steer: {playerData.steer}");
-            Console.WriteLine($"RPM: {playerData.engineRPM}");
+            PrintIfGratherThanZero(playerData.speed, "Speed: ");
+            PrintIfGratherThanZero(playerData.throttle, "Throttle: ");
+            PrintIfGratherThanZero(playerData.brake, "Brake: ");
+            PrintIfGratherThanZero(playerData.gear, "Gear: ");
+            PrintIfGratherThanZero(playerData.steer, "Steer: ");
+            PrintIfGratherThanZero(playerData.engineRPM, "RPM: ");
         }
 
         private static void Client_OnLapDataReceive(LapDataPacket packet)
@@ -41,10 +42,10 @@ namespace ConsoleSample
             var sector3Time = TimeSpan.FromMilliseconds(playerData.sector3TimeInMS);
             Console.WriteLine("----- PLAYER DATA -----");
             Console.WriteLine($"PLAYER INDEX: {packet.header.playerCarIndex}");
-            Console.WriteLine($"Sector 1: 00:{sector1Time.TotalSeconds}:{sector1Time.TotalMilliseconds}");
-            Console.WriteLine($"Sector 2: 00:{sector2Time.TotalSeconds}:{sector2Time.TotalMilliseconds}");
-            Console.WriteLine($"Sector 3: 00:{sector3Time.TotalSeconds}:{sector3Time.TotalMilliseconds}");
-            Console.WriteLine($"Last Lap: {lastLapTime.TotalMinutes}:{lastLapTime.TotalSeconds}:{lastLapTime.TotalMilliseconds} ms");
+            PrintIfGratherThanZero(sector1Time, "Sector 1: ");
+            PrintIfGratherThanZero(sector2Time, "Sector 2: ");
+            PrintIfGratherThanZero(sector3Time, "Sector 3: ");
+            PrintIfGratherThanZero(lastLapTime, "Last Lap: ");
         }
 
         private static void Client_OnCarDamageDataReceive(CarDamagePacket packet)
@@ -53,6 +54,26 @@ namespace ConsoleSample
             Console.WriteLine($"PLAYER INDEX: {packet.header.playerCarIndex}");
             Console.WriteLine($"{JsonSerializer.Serialize(packet.carDamageData[packet.header.playerCarIndex])}");
             Console.WriteLine("----");
+        }
+
+        /// <summary>
+        /// Prints value to console if it's grather than zero
+        /// </summary>
+        /// <param name="value">Value to be printed</param>
+        private static void PrintIfGratherThanZero(TimeSpan value, string prefix = "")
+        {
+            if (value.TotalMilliseconds > 0)
+                Console.WriteLine($"{prefix} {Math.Round(value.TotalMinutes, 2)}:{Math.Round(value.TotalSeconds, 2)}:{Math.Round(value.TotalMilliseconds, 2)}");
+        }
+
+        /// <summary>
+        /// Prints value to console if it's grather than zero
+        /// </summary>
+        /// <param name="value">Value to be printed</param>
+        private static void PrintIfGratherThanZero(float value, string prefix = "")
+        {
+            if (value > 0)
+                Console.WriteLine($"{prefix} {value}");
         }
     }
 }
